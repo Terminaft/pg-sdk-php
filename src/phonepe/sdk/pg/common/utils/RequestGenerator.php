@@ -9,6 +9,8 @@ use PhonePe\common\exceptions\PhonePeException;
  */
 class RequestGenerator
 {
+    public static $curlOptions = [];
+
     /**
      * @desc Helper function to send a post request
      * @param $url
@@ -26,6 +28,10 @@ class RequestGenerator
         curl_setopt($ch, CURLOPT_POSTFIELDS, $body);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_HTTPHEADER , $headers);
+
+        foreach (static::$curlOptions as $key => $value) {
+            curl_setopt($ch, $key, $value);
+        }
 
         $httpResponse = new HttpResponse();
 
@@ -59,6 +65,10 @@ class RequestGenerator
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+        foreach (static::$curlOptions as $key => $value) {
+            curl_setopt($ch, $key, $value);
+        }
 
         $httpResponse = new HttpResponse();
 
